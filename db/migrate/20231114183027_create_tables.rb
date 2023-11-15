@@ -4,7 +4,7 @@ class CreateTables < ActiveRecord::Migration[7.0]
         t.string :name
         t.string :photo
         t.text :bio
-        t.integer :posts_counter
+        t.integer :posts_counter, default: 0
         t.timestamps
       end
   
@@ -12,8 +12,8 @@ class CreateTables < ActiveRecord::Migration[7.0]
         t.belongs_to :user, foreign_key: { to_table: :users, name: "author_id" }, index: true
         t.string :title
         t.text :text
-        t.integer :comments_counter
-        t.integer :likes_counter
+        t.integer :comments_counter, default: 0
+        t.integer :likes_counter, default: 0
         t.timestamps
       end
   
@@ -31,3 +31,4 @@ class CreateTables < ActiveRecord::Migration[7.0]
       end
     end
   end
+  
