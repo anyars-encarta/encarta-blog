@@ -14,7 +14,7 @@ class Post < ApplicationRecord
 
   # CommentsCounter must be an integer greater than or equal to zero.
   validates :comments_counter, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  
+
   # LikesCounter must be an integer greater than or equal to zero.
   validates :likes_counter, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
