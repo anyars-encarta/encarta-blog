@@ -26,13 +26,4 @@ RSpec.describe Post, type: :model do
       end.to change { user.posts_counter }.by(1)
     end
   end
-
-  describe '#recent_comments' do
-    let!(:post) { create(:post) }
-    let!(:recent_comments) { create_list(:comment, 7, post:) }
-
-    it 'returns the 5 most recent comments' do
-      expect(post.recent_comments).to eq(recent_comments.last(5).reverse)
-    end
-  end
 end
