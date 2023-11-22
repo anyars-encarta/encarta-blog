@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'UsersController', type: :request do
-
   describe 'GET /index' do
     let(:user) { create(:user) } # Create user from factory
 

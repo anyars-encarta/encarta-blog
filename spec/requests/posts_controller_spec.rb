@@ -4,7 +4,6 @@ RSpec.describe 'PostsController', type: :request do
   let(:user) { create(:user) } # Create user from factory
 
   describe 'GET /index' do
-
     it 'should render the correct response status' do
       get user_posts_path(user_id: user.id)
       expect(response).to have_http_status(:ok)
@@ -22,7 +21,6 @@ RSpec.describe 'PostsController', type: :request do
   end
 
   describe 'GET /show' do
-
     it 'should render the correct response status' do
       post = create(:post, user:) # Create post from factory
       get user_post_path(user_id: user.id, id: post.id)

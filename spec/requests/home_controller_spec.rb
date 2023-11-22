@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'HomeController', type: :request do
   describe 'GET /index' do
-
     it 'should render the correct response status' do
       get root_path
       expect(response).to have_http_status(:ok)
