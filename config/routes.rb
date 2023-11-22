@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # Set root to home#index for the base URL
-  root 'home#index'
+  root 'users#index'
 
   # Individual routes for users, their posts, and specific posts
   # get 'users', to: 'users#index', as: 'users'
