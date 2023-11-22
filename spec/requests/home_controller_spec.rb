@@ -1,10 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe 'HomeController', type: :request do
-  it 'renders the index action' do
-    get root_path
-    expect(response).to have_http_status(:ok)
-    expect(response).to render_template(:index)
-    expect(response.body).to include('Welcome to Encarta Blog App!')
+  describe 'GET /index' do
+
+    it 'should render the correct response status' do
+      get root_path
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'should render the correct Template' do
+      get root_path
+      expect(response).to render_template(:index)
+    end
+
+    it 'renders the correct placeholder text of the body' do
+      get root_path
+      expect(response.body).to include('Welcome to Encarta Blog App!')
+    end
   end
 end
