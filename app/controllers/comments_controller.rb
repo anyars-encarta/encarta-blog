@@ -1,4 +1,3 @@
-# rubocop:disable Layout/EndOfLine
 class CommentsController < ApplicationController
   def new
     @comment = Comment.new
@@ -21,4 +20,3 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:text, :user_id, :post_id)
   end
 end
-# rubocop:enable Layout/EndOfLine

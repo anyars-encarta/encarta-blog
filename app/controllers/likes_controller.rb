@@ -1,4 +1,3 @@
-# rubocop:disable Layout/EndOfLine
 class LikesController < ApplicationController
   def new
     @like = Like.new
@@ -21,4 +20,3 @@ class LikesController < ApplicationController
     params.require(:like).permit(:user_id, :post_id)
   end
 end
-# rubocop:enable Layout/EndOfLine
