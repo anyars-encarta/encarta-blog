@@ -1,3 +1,13 @@
-<!-- Placeholder for a specific post -->
-<h1>Post Details</h1>
-<p>This is where details for a specific post will be shown.</p>
+<%# https://users/745/posts/3 %>
+<% if @post.present? %>
+  <p>Post #<%= @post_index + 1 %> by <%= @user.name %></p>
+  Comments: <%= @post.comments_counter %>, Likes: <%= @post.likes_counter %>
+
+    <p><%= link_to @post.title, user_post_path(@user, @post) %></p>
+
+    <ul>
+      <% @post.comments.each do |comment| %>
+        <li><%= @user.name %>: <%= comment.text %></li>
+      <% end %>
+    </ul>
+<% end %>
