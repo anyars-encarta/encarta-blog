@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   def index
     # Action to handle https://users/745/posts
-    @posts = @user.posts
+    @posts = @user.posts.includes(:author)
   end
 
   def show
