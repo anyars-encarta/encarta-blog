@@ -8,7 +8,7 @@
     <% @posts.each do |post| %>
     <%= render 'shared/post', post: post, user:@user %>
     <div class="post-content">
-      <h2>Comments</h2>
+      <h2 class='pagination'>Comments</h2>
       <%= render "shared/comments", comments:post.recent_comments %>
     </div>
     <% end %>

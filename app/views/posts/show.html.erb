@@ -15,9 +15,9 @@
     </div>
   </div>
 
-  <div class="">
+  <div class="pagination comments-container">
     <h2>Comments</h2>
     <%= render "shared/comments", comments:@comments %>
   </div>
-
+  <%=link_to 'Pagination', user_posts_path(@user) %>
 </div>

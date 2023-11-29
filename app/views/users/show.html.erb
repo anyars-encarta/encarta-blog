@@ -3,9 +3,14 @@
     <%= render 'shared/user', user:@user %>
   </div>
 
+  <div class="bio">
+    <h2>Bio</h2>
+    <p><%= @user.bio %></p>
+  </div>
+
   <div class="posts">
-    <h2>Recent Posts</h2>
-    <% @recent_posts.each do |post| %>
+    <% @recent_posts.each_with_index do |post, index| %>
+      <h3>Post #<%= index + 1 %></h3>
       <%= render 'shared/post', post:post, user:@user %>
     <% end %>
   </div>
