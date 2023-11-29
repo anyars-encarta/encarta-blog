@@ -20,7 +20,7 @@ FactoryBot.define do
   end
 
   factory :comment do
-    text { "This is a comment body." }
+    text { 'This is a comment body.' }
     association :user
     association :post
   end

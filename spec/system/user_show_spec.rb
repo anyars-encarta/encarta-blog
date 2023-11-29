@@ -15,7 +15,7 @@ RSpec.feature 'User Show Page', type: :feature do
     expect(page).to have_content(@user.bio) # Updated to check for the user bio
 
     @recent_posts.each_with_index do |post, index|
-      expect(page).to have_css("h3", text: "Post ##{index + 1}") # Check for numbered post headings
+      expect(page).to have_css('h3', text: "Post ##{index + 1}") # Check for numbered post headings
       expect(page).to have_content(post.title)
     end
 

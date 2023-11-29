@@ -12,7 +12,7 @@ RSpec.feature 'User Index Page', type: :feature do
   scenario 'displays user information' do
     within '.users' do
       @users.each do |user|
-        expect(page).to have_css(".user-name", text: user.name)
+        expect(page).to have_css('.user-name', text: user.name)
         expect(page).to have_css("img[src='#{user.photo}'][alt='#{user.name}']")
         expect(page).to have_content("Number of posts: #{user.posts_counter}")
       end
