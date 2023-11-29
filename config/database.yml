@@ -21,7 +21,8 @@ default: &default
 
   username: postgres
   password: Alcatraz@1982
-
+  host: localhost
+  
 development:
   <<: *default
   database: encarta_blog_app_development

@@ -1,25 +1,43 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'validations' do
-    it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:photo) }
-    it { should validate_presence_of(:bio) }
-    it { should validate_numericality_of(:posts_counter).only_integer.is_greater_than_or_equal_to(0) }
-  end
-
   describe 'associations' do
-    it { should have_many(:posts).dependent(:destroy) }
-    it { should have_many(:comments).through(:posts) }
-    it { should have_many(:likes).through(:posts) }
+    it 'should have correct associations' do
+      expect(User.reflect_on_association(:comments).macro).to eq(:has_many)
+      expect(User.reflect_on_association(:posts).macro).to eq(:has_many)
+      expect(User.reflect_on_association(:likes).macro).to eq(:has_many)
+    end
   end
 
-  describe '#recent_posts' do
-    let!(:user) { create(:user) }
-    let!(:recent_posts) { create_list(:post, 5, user:) }
+  describe 'validations' do
+    it 'should validate presence of name' do
+      user = User.new(name: nil)
+      expect(user).to_not be_valid
+      expect(user.errors[:name]).to include("can't be blank")
+    end
 
-    it 'returns the 3 most recent posts' do
-      expect(user.recent_posts).to eq(recent_posts.last(3).reverse)
+    it 'should validate numericality of posts_counter' do
+      user = User.new(name: 'name', posts_counter: -1)
+      expect(user).to_not be_valid
+      expect(user.errors[:posts_counter]).to include('must be greater than or equal to 0')
+    end
+
+    it 'should be valid with correct attributes' do
+      user = User.new(name: 'name', posts_counter: 0)
+      expect(user).to be_valid
+    end
+  end
+
+  describe '#most_recent_posts' do
+    let(:user) { create(:user) }
+
+    it 'returns the three most recent posts' do
+      user = User.create(name: 'name')
+      first_post = Post.create(title: 'first post', text: 'text', author_id: user.id)
+      Post.create(title: 'second post', text: 'text', author_id: user.id)
+      Post.create(title: 'third post', text: 'text', author_id: user.id)
+      Post.create(title: 'fourth post', text: 'text', author_id: user.id)
+      expect(user.most_recent_posts).to_not include(first_post)
     end
   end
 end

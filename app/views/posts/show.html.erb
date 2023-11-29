@@ -1,13 +1,23 @@
-<%# https://users/745/posts/3 %>
-<% if @post.present? %>
-  <p>Post #<%= @post_index + 1 %> by <%= @user.name %></p>
-  Comments: <%= @post.comments_counter %>, Likes: <%= @post.likes_counter %>
+<div class="posts-show">
+  <div class="post-show">
 
-    <p><%= link_to @post.title, user_post_path(@user, @post) %></p>
+    <div class="post-title-show">
+      <h1><%= @post.title %></h1>
 
-    <ul>
-      <% @post.comments.each do |comment| %>
-        <li><%= @user.name %>: <%= comment.text %></li>
-      <% end %>
-    </ul>
-<% end %>
+      <div class="post-interact">
+        <p>comments: <%= @post.comments_counter %></p>
+        <p>likes: <%= @post.likes_counter %></p>
+      </div>
+    </div>
+
+    <div>
+      <p><%= @post.text %></p>
+    </div>
+  </div>
+
+  <div class="">
+    <h2>Comments</h2>
+    <%= render "shared/comments", comments:@comments %>
+  </div>
+
+</div>

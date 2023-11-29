@@ -4,7 +4,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    # Action to handle https://users/745
-    @user = User.find(params[:id])
+    @user = User.find_by_id(params[:id])
+    if @user
+      @recent_posts = @user.most_recent_posts
+    else
+      flash[:alert] = 'User not found'
+      redirect_to root_path
+    end
   end
 end

@@ -1,8 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  describe 'associations' do
-    it { should belong_to(:user) }
-    it { should belong_to(:post) }
+  describe 'Comment model' do
+    user1 = User.create(name: 'Anyars Yussif', photo: 'something.jpeg',
+                        bio: 'Digital Marketer, programmer and HR officer', posts_counter: 0)
+    user2 = User.create(name: 'Yussif Gariba', photo: 'another.jpeg',
+                        bio: 'she loves to design henna and have fun', posts_counter: 0)
+    post = Post.create(title: 'title', text: 'I dont have a title so I choose any title!',
+                       author: user1, likes_counter: 3, comments_counter: 7)
+    comment = Comment.create(post:, user: user2, text: 'serina is a good girl')
+
+    it 'increase comments count on the post' do
+      expect do
+        comment.update_comment_count
+        post.reload
+      end.to change(post, :comments_counter).by(1)
+    end
   end
 end

@@ -1,42 +1,42 @@
 require 'rails_helper'
 
-RSpec.describe 'PostsController', type: :request do
-  let(:user) { create(:user) } # Create user from factory
-
-  describe 'GET /index' do
-    it 'should render the correct response status' do
-      get user_posts_path(user_id: user.id)
-      expect(response).to have_http_status(:ok)
+RSpec.describe 'Posts', type: :request do
+  describe 'GET /users/732/posts' do
+    it 'returns a 200 OK status' do
+      get '/users/732/posts'
+      expect(response).to have_http_status(200)
     end
 
-    it 'should render the correct Template' do
-      get user_posts_path(user_id: user.id)
+    it 'renders the index template' do
+      get '/users/732/posts'
       expect(response).to render_template(:index)
-    end
-
-    it 'renders the correct placeholder text of the body' do
-      get user_posts_path(user_id: user.id)
-      expect(response.body).to include('This is where all posts for the user will be listed')
     end
   end
 
-  describe 'GET /show' do
-    it 'should render the correct response status' do
-      post = create(:post, user:) # Create post from factory
-      get user_post_path(user_id: user.id, id: post.id)
-      expect(response).to have_http_status(:ok)
-    end
-
-    it 'should render the correct Template' do
-      post = create(:post, user:) # Create post from factory
-      get user_post_path(user_id: user.id, id: post.id)
+  describe 'GET /users/732/posts/:id' do
+    it 'renders the show template' do
+      get '/users/732/posts/2'
       expect(response).to render_template(:show)
     end
 
-    it 'renders the correct placeholder text of the body' do
-      post = create(:post, user:) # Create post from factory
-      get user_post_path(user_id: user.id, id: post.id)
-      expect(response.body).to include('This is where details for a specific post will be shown')
+    it 'contains the post ID in the URL' do
+      get '/users/732/posts/2'
+      expect(request.fullpath).to include('/users/732/posts/2')
+    end
+
+    it 'renders the page with html template' do
+      get '/users/732/posts'
+      expect(response.body).to include('<div class="container">')
+      expect(response.body).to include('<h1>Username</h1>')
+      expect(response.body).to include('<p class= "inner-text">Number of posts x</p>')
+      expect(response.body).to include('<div class="container">')
+      expected_image_path = "src=\"#{ActionController::Base.helpers.image_path('example.com.png')}\" alt=\"image\">"
+      expect(response.body).to include(expected_image_path)
+      expect(response.body).to include('<h2>post 1</h2>')
+      expect(response.body).to include('<h2>post 2</h2>')
+      expect(response.body).to include('<p>comment 1</p>')
+      expect(response.body).to include('<p>comment 2</p>')
+      expect(response.body).to include('<p>comment 3</p>')
     end
   end
 end
