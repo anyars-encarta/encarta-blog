@@ -1,6 +1,10 @@
 <div class="posts-show">
   <div class="post-show">
-
+     
+  <div class="users">
+    <%= render 'shared/user', user:@user %>
+  </div>
+  
     <div class="post-title-show">
       <h1><%= @post.title %></h1>
 

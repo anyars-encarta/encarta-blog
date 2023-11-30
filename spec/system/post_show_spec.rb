@@ -12,6 +12,10 @@ RSpec.feature 'User Post Show', type: :feature do
 
   scenario 'displays post show page content' do
     expect(page).to have_css('.post-title-show h1', text: @post.title)
+
+    # Test to assert you can see who wrote the post
+    expect(page).to have_css('.user-name', text: @user.name)
+
     expect(page).to have_css('.post-interact p', text: "comments: #{@post.comments_counter}")
     expect(page).to have_css('.post-interact p', text: "likes: #{@post.likes_counter}")
     expect(page).to have_css('.posts-show p', text: @post.text)
