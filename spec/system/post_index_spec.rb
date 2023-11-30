@@ -11,8 +11,6 @@ RSpec.feature 'User Post Index', type: :feature do
     expect(page).to have_css('.user-container')
     expect(page).to have_css('.img-container img')
     expect(page).to have_css('.user-name', text: @user.name)
-
-    # Test to assert that you can see the number of posts the user has written
     expect(page).to have_css('.user-post', text: "Number of posts: #{@user.posts_counter}")
 
     @posts.each do |post|
@@ -21,7 +19,6 @@ RSpec.feature 'User Post Index', type: :feature do
       expect(page).to have_css('.interactions', text: "comments: #{post.comments_counter}")
       expect(page).to have_css('.interactions', text: "likes: #{post.likes_counter}")
 
-      # Test to assert that you can see the first comments on a post
       within(".post[data-post-id='#{post.id}']") do
         first_comment = post.recent_comments.first
         if first_comment
@@ -31,16 +28,11 @@ RSpec.feature 'User Post Index', type: :feature do
         end
       end
 
-      # Test to assert redirection to the post's show page when clicked
       within(".post[data-post-id='#{post.id}']") do
         find('.single-post-cont').click
       end
-
-      # Output the current URL after clicking
-      puts "Current URL: #{page.current_url}"
       expect(page).to have_current_path(user_post_path(@user, post))
     end
-
     expect(page).to have_css('.pagination')
   end
 end
