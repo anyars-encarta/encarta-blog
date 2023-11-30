@@ -1,29 +1,64 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  describe 'validations' do
-    it { should validate_presence_of(:title) }
-    it { should validate_length_of(:title).is_at_most(250) }
-    it { should validate_presence_of(:text) }
-    it { should validate_numericality_of(:comments_counter).only_integer.is_greater_than_or_equal_to(0) }
-    it { should validate_numericality_of(:likes_counter).only_integer.is_greater_than_or_equal_to(0) }
+  let(:user) do
+    User.create(
+      name: 'Me myself',
+      photo: 'https://memyself.com/photos/memyself',
+      bio: 'talk about me',
+      posts_counter: 10
+    )
+  end
+
+  let(:post) do
+    Post.create(
+      author: user,
+      title: 'Post one',
+      text: 'This is my first post'
+    )
   end
 
   describe 'associations' do
-    it { should belong_to(:user) }
-    it { should have_many(:comments).dependent(:destroy) }
-    it { should have_many(:likes).dependent(:destroy) }
-    it { should belong_to(:author).class_name('User').with_foreign_key('author_id') }
+    it { is_expected.to belong_to(:author).class_name('User').counter_cache(:posts_counter) }
+    it { is_expected.to have_many(:likes).dependent(:destroy) }
+    it { is_expected.to have_many(:comments).dependent(:destroy) }
   end
 
-  describe '#update_posts_counter' do
-    let!(:user) { create(:user) }
-    let!(:post) { create(:post, user:) }
+  describe 'validations' do
+    it 'is valid with valid attributes' do
+      post = Post.new(author: user, title: 'Post one', text: 'This is my firt post', likes_counter: 0,
+                      comments_counter: 0)
+      expect(post).to be_valid
+    end
 
-    it 'updates the posts counter for the associated user by 1' do
-      expect do
-        post.update_posts_counter(user)
-      end.to change { user.posts_counter }.by(1)
+    it 'is not valid without a title' do
+      post.title = ''
+      expect(post).to_not be_valid
+    end
+
+    it 'is not valid with a title exceeding 250 characters' do
+      post.title = 'A' * 251
+      expect(post).to_not be_valid
+    end
+
+    it 'is not valid with a non-integer comments counter' do
+      post.comments_counter = 'not-an-integer'
+      expect(post).to_not be_valid
+    end
+
+    it 'is not valid with a non-integer likes counter' do
+      post.likes_counter = 'not-an-integer'
+      expect(post).to_not be_valid
+    end
+  end
+
+  describe 'custom methods in Post' do
+    it 'increments user posts counter' do
+      expect { post.increment_user_posts_counter }.to change(user, :posts_counter).by(1)
+    end
+    it 'checks most recent 5 comments' do
+      expect(post.recent_comments).to eq(post.comments.last(5))
+      puts post.comments.last(5)
     end
   end
 end

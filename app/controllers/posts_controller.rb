@@ -1,22 +1,54 @@
+# post_controller.rb
 class PostsController < ApplicationController
-  before_action :set_user
-
   def index
-    # Action to handle https://users/745/posts
-    @posts = @user.posts
+    @posts = Post.includes(:author).where(author_id: params[:user_id])
+    @user = User.includes(:posts).find(params[:user_id])
   end
 
   def show
-    # Action to handle https://users/745/posts/3
-    @user = User.find(params[:user_id])
-    @post = @user.posts.find(params[:id])
-    # @posts = @user.posts
-    @post_index = @user.posts.index(@post)
+    @post = Post.includes(:author).find_by(author_id: params[:user_id], id: params[:id])
+    if @post
+      @user = @post.author
+      @comments = Post.find(@post.id).comments
+    else
+      flash[:alert] = 'Post not found'
+    end
+  end
+
+  def new
+    @user = current_user
+    @post = Post.new
+  end
+
+  def create
+    @user = current_user
+    @post = @user.posts.new(post_params)
+    if @post.save
+      redirect_to user_post_path(@user, @post)
+    else
+      puts @user
+      puts @post.errors.full_messages
+      flash.now[:errors] = 'Invalid post!'
+      render :new
+    end
+  end
+
+  def destroy
+    @post = Post.find_by(author_id: params[:user_id], id: params[:id])
+    @post.destroy
+
+    if @post.destroyed?
+      flash[:notice] = 'Post deleted!'
+      redirect_to user_posts_path(@post.author)
+    else
+      flash.now[:errors] = 'Unable to delete post!'
+      redirect_to user_post_path(@post.author, @post)
+    end
   end
 
   private
 
-  def set_user
-    @user = User.find(params[:user_id])
+  def post_params
+    params.require(:post).permit(:title, :text)
   end
 end

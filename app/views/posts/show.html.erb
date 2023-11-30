@@ -1,13 +1,27 @@
-<%# https://users/745/posts/3 %>
-<% if @post.present? %>
-  <p>Post #<%= @post_index + 1 %> by <%= @user.name %></p>
-  Comments: <%= @post.comments_counter %>, Likes: <%= @post.likes_counter %>
+<div class="posts-show">
+  <div class="post-show">
+     
+  <div class="users">
+    <%= render 'shared/user', user:@user %>
+  </div>
+  
+    <div class="post-title-show">
+      <h1><%= @post.title %></h1>
 
-    <p><%= link_to @post.title, user_post_path(@user, @post) %></p>
+      <div class="post-interact">
+        <p>comments: <%= @post.comments_counter %></p>
+        <p>likes: <%= @post.likes_counter %></p>
+      </div>
+    </div>
 
-    <ul>
-      <% @post.comments.each do |comment| %>
-        <li><%= @user.name %>: <%= comment.text %></li>
-      <% end %>
-    </ul>
-<% end %>
+    <div>
+      <p><%= @post.text %></p>
+    </div>
+  </div>
+
+  <div class="pagination comments-container">
+    <h2>Comments</h2>
+    <%= render "shared/comments", comments:@comments %>
+  </div>
+  <%=link_to 'Pagination', user_posts_path(@user) %>
+</div>
