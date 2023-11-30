@@ -1,38 +1,31 @@
 require 'rails_helper'
 
-RSpec.feature 'User Post Index', type: :feature do
-  before do
-    @user = FactoryBot.create(:user)
-    @posts = FactoryBot.create_list(:post, 10, author: @user)
-    visit user_posts_path(@user)
+RSpec.feature 'Post view', type: :feature do
+  let!(:user) { create(:user) }
+  let!(:post) { create(:post, author: user) }
+  let!(:comments) { create_list(:comment, 3, post: post) }
+
+  scenario 'User post index page' do
+    visit user_posts_path(user)
+
+    expect(page).to have_css('.user-container')
+    expect(page).to have_css('.user-container img')
+    expect(page).to have_css('.user-name', text: user.name)
+    expect(page).to have_content("Number of posts: #{user.posts_counter}")
+
+    expect(page).to have_css('.post')
+    expect(page).to have_css('.post h1', text: post.title)
+    expect(page).to have_css('.post p', text: post.text.truncate(30))
+    expect(page).to have_css('.comment', count: 3)
+    expect(page).to have_content("comments: #{post.comments_counter}")
+    expect(page).to have_content("likes: #{post.likes_counter}")
   end
 
-  scenario 'displays post index page content' do
-    expect(page).to have_css('.user-container')
-    expect(page).to have_css('.img-container img')
-    expect(page).to have_css('.user-name', text: @user.name)
-    expect(page).to have_css('.user-post', text: "Number of posts: #{@user.posts_counter}")
+  scenario 'Clicking on a post redirects to post show page' do
+    visit user_posts_path(user)
 
-    @posts.each do |post|
-      expect(page).to have_css('.post', text: post.title)
-      expect(page).to have_css('.post-content p', text: post.text)
-      expect(page).to have_css('.interactions', text: "comments: #{post.comments_counter}")
-      expect(page).to have_css('.interactions', text: "likes: #{post.likes_counter}")
+    click_link post.title
 
-      within(".post[data-post-id='#{post.id}']") do
-        first_comment = post.recent_comments.first
-        if first_comment
-          expect(page).to have_css('.comments-container', text: "#{first_comment.user.name}: #{first_comment.text}")
-        else
-          puts "No comments found for post: #{post.title}"
-        end
-      end
-
-      within(".post[data-post-id='#{post.id}']") do
-        find('.single-post-cont').click
-      end
-      expect(page).to have_current_path(user_post_path(@user, post))
-    end
-    expect(page).to have_css('.pagination')
+    expect(page).to have_current_path(user_post_path(user, post))
   end
 end

@@ -1,3 +1,4 @@
+# factories.rb
 FactoryBot.define do
   factory :post do
     title { 'Sample Post' }
@@ -5,10 +6,6 @@ FactoryBot.define do
     comments_counter { rand(1..10) }
     likes_counter { rand(1..10) }
     association :author, factory: :user
-
-    # after(:create) do |post|
-    #   User.increment_counter(:posts_counter, post.author.id)
-    # end
   end
 
   factory :like do

@@ -29,6 +29,5 @@ RSpec.feature 'User Post Show', type: :feature do
   scenario 'clicking pagination link redirects to user post index' do
     click_link('Pagination')
     expect(current_path).to eq(user_posts_path(@user))
-    # Add more expectations for the post index page if needed
   end
 end
