@@ -1,7 +1,10 @@
 # routes.rb
 Rails.application.routes.draw do
   devise_for :users
-  root to: 'users#index'
+
+  root to: 'users#login'
+
+  get 'login', to: 'users#login', as: 'login'
 
   get 'likes/new'
   post 'likes/create'
