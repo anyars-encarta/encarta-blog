@@ -4,13 +4,13 @@
 }
 
 .post-show {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .posts-show,
 .comments-container {
-    margin-top: 15px;
-    background-color: aqua;
-    padding: 10px;
-    border: 2px solid black;
+  margin-top: 15px;
+  background-color: aqua;
+  padding: 10px;
+  border: 2px solid black;
 }
