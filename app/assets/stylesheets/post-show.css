@@ -1,0 +1,16 @@
+.post-show,
+.post-interact {
+  display: flex;
+}
+
+.post-show {
+    justify-content: space-between;
+}
+
+.posts-show,
+.comments-container {
+    margin-top: 15px;
+    background-color: aqua;
+    padding: 10px;
+    border: 2px solid black;
+}

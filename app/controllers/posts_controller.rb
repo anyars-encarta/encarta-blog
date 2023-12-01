@@ -9,7 +9,11 @@ class PostsController < ApplicationController
     @post = Post.includes(:author).find_by(author_id: params[:user_id], id: params[:id])
     if @post
       @user = @post.author
-      @comments = Post.find(@post.id).comments
+      # @comments = Post.find(@post.id).comments
+
+      @posts = @user.posts.order(:created_at)
+      @post_index = @posts.index(@post)
+      @comments = @post.comments
     else
       flash[:alert] = 'Post not found'
     end

@@ -2,14 +2,14 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  root to: 'users#login'
+  root to: 'users#index'
 
-  get 'login', to: 'users#login', as: 'login'
+  # get 'login', to: 'users#login', as: 'login'
 
-  get 'likes/new'
-  post 'likes/create'
-  get 'comments/new'
-  post 'comments/create'
+  # get 'likes/new'
+  # post 'likes/create'
+  # get 'comments/new'
+  # post 'comments/create'
   
   resources :users, only: [:index, :show] do
     resources :posts, only: [:index, :show] do

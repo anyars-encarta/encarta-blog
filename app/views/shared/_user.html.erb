@@ -1,9 +1,7 @@
 <div class="user-container" data-user-id="<%= user.id %>">
   <%= link_to user_path(user) do %>
     <div class="container-components">
-      <div class="img-container">
-        <img src="<%= user.photo %>" alt="<%= user.name %>" />
-      </div>
+      <img src="<%= user.photo %>" alt="<%= user.name %>" class="image" />
 
       <div class="userpost-container">
         <h1 class="user-name" data-user-id="<%= user.id %>"><%= user.name %></h1>

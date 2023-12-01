@@ -1,0 +1,60 @@
+.bio,
+.posts,
+.posts-content {
+    border: 2px solid black;
+    margin-top: 15px;
+    background-color: aqua;
+    padding: 10px;
+}
+
+.bio h2,
+.posts h3 {
+    margin-top: 5px;
+}
+
+.bio h2, p {
+    color: blue;
+}
+
+.all-posts {
+    background-color: aqua;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 120px;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.post-content {
+    border-top: blue;
+}
+
+.post-content p {
+    text-decoration: none;
+}
+   
+.interactions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.interactions p {
+    float: right;
+}
+
+.pagination {
+    background-color: aqua;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 120px;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+}
