@@ -53,13 +53,8 @@
 .field em,
 .shared-link,
 .checked {
-  color: white;
+  color: aqua;
 }
-
-/* .shared-link,
-  .checked {
-    color: rgb(22, 35, 218);
-  } */
 
 .login {
   font-size: 150%;

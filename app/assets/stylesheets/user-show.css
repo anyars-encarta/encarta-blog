@@ -1,3 +1,7 @@
+.show-page {
+  padding: 10px;
+}
+
 .bio,
 .posts,
 .posts-content {
@@ -5,6 +9,7 @@
   margin-top: 15px;
   background-color: aqua;
   padding: 10px;
+  border-radius: 15px;
 }
 
 .bio h2,
