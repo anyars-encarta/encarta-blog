@@ -6,6 +6,12 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+
+    if can?(:read, @article)
+      # Show the article to the user.
+    else
+      # Redirect the user to the login page.
+    end
   end
 
   def show
