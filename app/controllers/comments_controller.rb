@@ -1,4 +1,13 @@
 class CommentsController < ApplicationController
+  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @comments = Comment.all
+  end
+
+  def show
+  end
+  
   def new
     @comment = Comment.new
   end
@@ -17,6 +26,17 @@ class CommentsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @comment.update(comment_params)
+      redirect_to user_post_path, notice: 'Comment was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
   def destroy
     @commentdel = Comment.includes(:post).find(params[:id])
     @post = @commentdel.post
@@ -26,10 +46,14 @@ class CommentsController < ApplicationController
     else
       flash.now[:errors] = 'Unable to delete comment!'
     end
-    redirect_to user_post_path(@post.author, @post)
+    redirect_to user_post_path(@post.author, @post), notice: 'Comment was successfully deleted.'
   end
 
   private
+
+  def set_comment
+    @comment = Comment.find(params[:id])
+  end
 
   def comment_params
     params.require(:comment).permit(:text)
