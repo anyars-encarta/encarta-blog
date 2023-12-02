@@ -1,11 +1,15 @@
 # routes.rb
 Rails.application.routes.draw do
-  root 'users#index'
+  devise_for :users
 
-  get 'likes/new'
-  post 'likes/create'
-  get 'comments/new'
-  post 'comments/create'
+  root to: 'users#index'
+
+  # get 'login', to: 'users#login', as: 'login'
+
+  # get 'likes/new'
+  # post 'likes/create'
+  # get 'comments/new'
+  # post 'comments/create'
   
   resources :users, only: [:index, :show] do
     resources :posts, only: [:index, :show] do

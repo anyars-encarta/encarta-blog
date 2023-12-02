@@ -1,7 +1,7 @@
 <div class="comments">
   <% comments.each do |comment| %>
     <div class="comment">
-      <p class="comments-container p"><%= comment.user.name%>: <%= comment.text %></p>
+      <p><%= comment.user.name%>: <%= comment.text %></p>
     </div>
   <% end %>
 </div>
